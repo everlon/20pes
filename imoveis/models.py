@@ -98,7 +98,9 @@ class Imovel(Base):
     suites = models.PositiveSmallIntegerField('Suítes', null=True, default='1')
     vagas_garagem = models.PositiveSmallIntegerField('Vagas na garagem', null=True, default='1')
     elevador = models.PositiveSmallIntegerField('Elevador', null=True, default='1')
-    # galeria = models.ManyToManyField(Imagem, blank=True)
+    galeria_imagens = models.ManyToManyField(Imagem, blank=True)
+    video_yt = models.TextField('Video', max_length=1200, blank=True)  # HTMLField ?
+    google_map = models.TextField('Mapa', max_length=1200, blank=True)  # HTMLField ?
 
     class Meta:
         verbose_name = 'Imóvel'
@@ -109,8 +111,11 @@ class Imovel(Base):
 
 
 #  SIGNALS: Criar URLs amigáveis / Slugs
-
 def imovel_pre_save(signal, instance, sender, **kwargs):
     instance.slug = slugify(instance.titulo)
 
+def categ_pre_save(signal, instance, sender, **kwargs):
+    instance.slug = slugify(instance.titulo)
+
 signals.pre_save.connect(imovel_pre_save, sender=Imovel)
+signals.pre_save.connect(categ_pre_save, sender=Categoria)

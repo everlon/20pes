@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'django.contrib.humanize',
 	'stdimage',
+    'django_bootstrap5',
 
     'imoveis',
 ]
@@ -143,13 +144,13 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880 # 5 MB
 # LOGOUT_REDIRECT_URL = 'index'
 
 # Configuração de e-mail
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-EMAIL_HOST = 'mail.smsnebulizadores.com.br'
-EMAIL_HOST_USER = 'smsnebulizadores@smsnebulizadores.com.br'
-EMAIL_HOST_PASSWORD = '61x26v5ljcj9'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
+# EMAIL_HOST = 'mail.smsnebulizadores.com.br'
+# EMAIL_HOST_USER = 'smsnebulizadores@smsnebulizadores.com.br'
+# EMAIL_HOST_PASSWORD = '61x26v5ljcj9'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
 
 
 # Default primary key field type

@@ -1,0 +1,13 @@
+__pycache__
+core/__pycache__/*
+imoveis/__pycache__/*
+*.*~
+*.pyc
+.idea
+.DS_Store
+tmp/
+TODO.txt
+core/settings.py
+venv/
+assets/
+media/

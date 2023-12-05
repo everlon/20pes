@@ -24,7 +24,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', include('imoveis.urls')),
     path('painel/', admin.site.urls),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT,)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT,)
 
 admin.site.site_header = '20 Pés'
 admin.site.site_title = 'EchoWorks'

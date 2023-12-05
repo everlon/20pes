@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<main id="main">
+
+    <!-- ======= Intro Single ======= -->
+    <section class="intro-single">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-lg-8">
+            <div class="title-single-box">
+              <h1 class="title-single">Nossos maravilhosos imóveis</h1>
+              <span class="color-text-a">Destaques</span>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-4">
+            <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Destaques
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section><!-- End Intro Single-->
+
+    <!-- ======= Property Grid ======= -->
+    <section class="property-grid grid">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-9"></div>
+                <div class="col-sm-3">
+                    <div class="grid-option">
+                        <form>
+                          <select class="form-select">
+                            <option selected>Todos</option>
+                            <option value="1">Recentes</option>
+                            <option value="2">Locações</option>
+                            <option value="3">Para Venda</option>
+                          </select>
+                        </form>
+                      </div>
+                </div>
+            </div>
+          </div>
+
+          {% if imoveis %}
+            {% for i in imoveis %}
+                <div class="col-md-4">
+                    <div class="card-box-a card-shadow">
+                    <div class="img-box-a">
+                        <img src="/media/{{ i.imagem }}" alt="" class="img-a img-fluid">
+                    </div>
+                    <div class="card-overlay">
+                        <div class="card-overlay-a-content">
+                        <div class="card-header-a">
+                            <h2 class="card-title-a">
+                            <a href="{% url 'property-single' slug=i.slug %}">{{ i.titulo }}
+                                <br />{{ i.cidade }}-{{ i.uf}}</a>
+                            </h2>
+                        </div>
+                        <div class="card-body-a">
+                            <a href="{% url 'property-single' slug=i.slug %}" class="link-a">Saiba mais
+                            <span class="bi bi-chevron-right"></span>
+                            </a>
+                        </div>
+                        <div class="card-footer-a">
+                            <ul class="card-info d-flex justify-content-around">
+                            <li>
+                                <h4 class="card-info-title">Area</h4>
+                                <span>{{ i.area }}m
+                                <sup>2</sup>
+                                </span>
+                            </li>
+                            <li>
+                                <h4 class="card-info-title">Quartos</h4>
+                                <span>{{ i.quartos }}</span>
+                            </li>
+                            <li>
+                                <h4 class="card-info-title">Banheiros</h4>
+                                <span>{{ i.banheiros }}</span>
+                            </li>
+                            <li>
+                                <h4 class="card-info-title">Garagens</h4>
+                                <span>{{ i.vagas_garagem }}</span>
+                            </li>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            {% endfor %}
+          {% else %}
+            <div class="course-content">
+                <div class="d-flex justify-content-between text-center m-4">
+                <h1 class="text-center">Nenhum produto encontrado nesta categoria.</h1>
+                </div>
+            </div>
+          {% endif %}
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            {% include 'pagination.html' %}
+          </div>
+        </div>
+      </div>
+    </section><!-- End Property Grid Single-->
+
+  </main><!-- End #main -->
+
+{% endblock %}
