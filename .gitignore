@@ -9,5 +9,4 @@ tmp/
 TODO.txt
 core/settings.py
 venv/
-assets/
 media/

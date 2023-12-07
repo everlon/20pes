@@ -158,4 +158,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ADMINS = [('SMS Nebulizadores', 'worium@gmail.com')]
+ADMINS = [('20 Pés', 'worium@gmail.com')]
