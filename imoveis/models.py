@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 from stdimage.models import StdImageField
+from django.contrib.auth.models import User
 
 #  SIGNALS
 from django.db.models import signals
@@ -60,8 +61,8 @@ class Categoria(Base):
     parent = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name = 'Categoria'
-        verbose_name_plural = 'Categorias'
+        verbose_name = 'Tipo do imóvel'
+        verbose_name_plural = 'Tipos de imóveis'
 
     def __str__(self):
         full_path = [self.titulo]
@@ -82,12 +83,12 @@ class Imagem(Base):
 
 
 class Imovel(Base):
+    submitter = models.ForeignKey(User, on_delete=models.CASCADE)
     titulo = models.CharField('Título', max_length=100)
     preco = models.DecimalField('Preço', max_digits=8, decimal_places=2, blank=True, null=True)
     imagem = StdImageField('Imagem', upload_to=get_file_path, variations={'thumb': {'width': 480, 'height': 480, 'crop': True}}, blank=True)
     descricao = models.TextField('Descrição', max_length=1200, blank=True)  # HTMLField ?
     categoria = models.ForeignKey(Categoria, null=True, blank=True, on_delete=models.CASCADE)
-    mobiliado = models.BooleanField('Mobiliado', default=False)
     endereco = models.CharField('Endereço', max_length=150, blank=True, null=True)
     cidade = models.CharField('Cidade', max_length=150, blank=True, null=True)
     bairro = models.CharField('Bairro', max_length=150, blank=True, null=True)
@@ -95,12 +96,21 @@ class Imovel(Base):
     area = models.PositiveSmallIntegerField('Área', null=True, default='1')
     quartos = models.PositiveSmallIntegerField('Quartos', null=True, default='1')
     banheiros = models.PositiveSmallIntegerField('Banheiros', null=True, default='1')
-    suites = models.PositiveSmallIntegerField('Suítes', null=True, default='1')
+    suites = models.PositiveSmallIntegerField('Suítes', null=True, default='0')
     vagas_garagem = models.PositiveSmallIntegerField('Vagas na garagem', null=True, default='1')
-    elevador = models.PositiveSmallIntegerField('Elevador', null=True, default='1')
+    elevador = models.PositiveSmallIntegerField('Elevador', null=True, default='0')
     galeria_imagens = models.ManyToManyField(Imagem, blank=True)
     video_yt = models.TextField('Video', max_length=1200, blank=True)  # HTMLField ?
     google_map = models.TextField('Mapa', max_length=1200, blank=True)  # HTMLField ?
+
+    funcionarios = models.PositiveSmallIntegerField('Funcionários', null=True, default='0')
+    mobiliado = models.BooleanField('Mobiliado', default=False)
+    churrasqueira = models.BooleanField('Churrasqueira', default=False)
+    piscina = models.BooleanField('Piscina', default=False)
+    lavanderia = models.BooleanField('Lavanderia', default=False)
+    portaria24 = models.BooleanField('Portaria 24 hrs', default=False)
+    zelador = models.BooleanField('Zelador', default=False)
+    pet = models.BooleanField('Pode pet?', default=False)
 
     class Meta:
         verbose_name = 'Imóvel'

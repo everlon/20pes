@@ -1,10 +1,33 @@
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.shortcuts import render, redirect
+import random
+from django.contrib.auth import get_user_model
 
-from django.views.generic import ListView, DetailView, TemplateView, FormView
+from django.views.generic import View, ListView, DetailView, TemplateView, FormView
 
-from .forms import ContatoForm
+from .forms import ContatoForm, propertyNewForm
 from .models import Imovel, Categoria
+
+
+def senha_aleatoria():
+    return ''.join([str(random.randint(0, 9)) for _ in range(6)])
+
+
+
+class AtivarContaView(View):
+    def get(self, request, *args, **kwargs):
+        user_id = kwargs.get('user_id')
+        user = get_user_model().objects.filter(id=user_id).first()
+
+        if user and not user.is_active:
+            user.is_active = True
+            user.save()
+            messages.success(request, 'Conta ativada com sucesso. Faça login para continuar.')
+        else:
+            messages.error(request, 'Ocorreu um erro ao ativar a conta. Por favor, entre em contato.')
+
+        return redirect('home')
 
 
 class IndexView(ListView):
@@ -45,6 +68,73 @@ class contactView(FormView):
     def form_invalid(self, form, *args, **kwargs):
         messages.error(self.request, 'Erro ao enviar e-mail, favor entrar em contato')
         return super(contactView, self).form_invalid(form, *args, **kwargs)
+
+
+class propertyNewFormView(View):
+    template_name = 'property-new-form.html'
+    form_class = propertyNewForm
+    success_url = reverse_lazy('property-new')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
+        return context
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        senha=senha_aleatoria()
+
+        if form.is_valid():
+            categoria=form.cleaned_data['categoria']
+            titulo=form.cleaned_data['titulo']
+            descricao=form.cleaned_data['descricao']
+            quartos=form.cleaned_data['quartos']
+            banheiros=form.cleaned_data['banheiros']
+            cidade=form.cleaned_data['cidade']
+            bairro=form.cleaned_data['bairro']
+            uf=form.cleaned_data['uf']
+            imagem=form.cleaned_data['imagem']
+
+            User = get_user_model()
+            try:
+                usuario = User.objects.create_user(
+                    username=form.cleaned_data['email'],
+                    email=form.cleaned_data['email'],
+                    first_name=form.cleaned_data['nome'],
+                    password=senha
+                )
+            except Exception as e:
+                messages.error(self.request, 'Erro ao enviar o imóvel. Verifique os dados novamente ou o e-mail já esta cadastrado. Caso já tenha cadastrado algum imóvel anteriormente faça o Login.')
+                return render(request, self.template_name, {'form': form})
+
+            try:
+                imovel = Imovel.objects.create(
+                    submitter=usuario,
+                    categoria=categoria,
+                    titulo=titulo,
+                    descricao=descricao,
+                    quartos=quartos,
+                    banheiros=banheiros,
+                    cidade=cidade,
+                    bairro=bairro,
+                    uf=uf,
+                    imagem=imagem
+                )
+            except Exception as e:
+                messages.error(self.request, 'Erro ao enviar o cadastro, favor entrar em contato.')
+                return render(request, self.template_name, {'form': form})
+
+            form.send_mail(senha, usuario)
+            messages.success(self.request, 'Cadastro enviado com sucesso. Você recebeu um e-mail com sua senha temporária. Acesse sua área de cliente pelo botão LOGIN no topo do site.')
+
+        else:
+            messages.error(self.request, 'Erro ao enviar o cadastro, verifique os dados novamente.')
+
+        return redirect('property-new')
 
 
 class propertyListView(ListView):
