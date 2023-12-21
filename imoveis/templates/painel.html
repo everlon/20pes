@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<script src="https://unpkg.com/htmx.org@1.9.9"></script>
+
+<main id="main">
+
+    <!-- ======= Intro Single ======= -->
+    <section class="intro-single">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 col-lg-8">
+                <div class="title-single-box">
+                    <h1 class="title-single">Para Proprietários: Minha área</h1>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-4">
+              <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Minha Área
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <a href="{% url 'logout' %}" class="text-bg-primary p-1">Meus dados</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <a href="{% url 'logout' %}" class="text-bg-danger p-1">Sair</a>
+                    </li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+    </section><!-- End Intro Single-->
+
+    <section class="section-about">
+        <div class="container">
+            {% if imoveis %}
+                <div class="row">
+                    <div class="col-6"><h3>Seus Imóveis</h3></div>
+                    <div class="col-6 text-end"><a href="{% url 'property-new-Auth' %}" class="text-primary">Cadastrar novo imóvel</a></div>
+                    {% bootstrap_messages %}
+                </div>
+
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col">Título</th>
+                            <th scope="col">Local</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody hx-confirm="Deseja realmente apagar definitivamente este imóvel?" hx-target="closest tr" hx-swap="delete swap:1s">
+                        {% for imovel in imoveis %}
+                            <tr>
+                                <td>{% if imovel.active %}<i class="bi bi-check-lg text-primary"></i>{% else %}<i class="bi bi-dash-lg text-secondary"></i>{% endif %}</td>
+                                <td><img src="/media/{{ imovel.imagem }}" alt="NO IMG" width="100"></td>
+                                <td>{{ imovel.titulo }}</td>
+                                <td>{{ imovel.cidade }}-{{ imovel.uf }}</td>
+                                <td><a href="{% url 'property-edit' imovel.pk %}" class="text-primary">Editar</a></td>
+                                {% comment %}<td><a class="text-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete{{ imovel.pk }}">Apagar</a></td>{% endcomment %}
+                                <td><a class="text-danger" hx-post="{% url 'property-del' imovel.pk %}" style="cursor: pointer;">Apagar</a></td>
+                            </tr>
+
+                            {% comment %}
+                            <!-- Modal de confirmação -->
+                            <div class="modal fade" id="confirmDelete{{ imovel.pk }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirmação de Exclusão</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <p>Você tem certeza que deseja excluir "{{ imovel }}"?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <form method="post" action="{% url 'property-del' pk=imovel.pk %}">
+                                        {% csrf_token %}
+                                        <input type="submit" value="Confirmar" class="btn btn-danger">
+                                    </form>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            {% endcomment %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            {% else %}
+                <p>Você não tem imóveis cadastrados. <a href="{% url 'property-new-Auth' %}" class="text-primary">Cadastre seu primeiro imóvel</a></p>
+            {% endif %}
+
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<style>
+    tr.htmx-swapping td {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+    }
+</style>
+  {% endblock %}

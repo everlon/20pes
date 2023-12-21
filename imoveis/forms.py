@@ -84,3 +84,43 @@ class propertyNewForm(forms.ModelForm):
             headers={'Reply-To': email}
         )
         mail.send()
+
+
+class propertyNewFormAuthenticated(forms.ModelForm):
+
+    class Meta:
+        model = Imovel
+
+        fields = (
+            'categoria',
+            'titulo',
+            'descricao',
+            'preco',
+            'area',
+            'quartos',
+            'banheiros',
+            'suites',
+            'vagas_garagem',
+            'elevador',
+            'funcionarios',
+            'mobiliado',
+            'churrasqueira',
+            'piscina',
+            'lavanderia',
+            'portaria24',
+            'zelador',
+            'pet',
+            'endereco',
+            'cidade',
+            'bairro',
+            'uf',
+            'imagem'
+        )
+
+        labels = {
+            'categoria': 'Tipo da propriedade',
+            'titulo': 'Frase de apresentação',
+            'imagem': 'Selecione a melhor foto da propriedade',
+        }
+
+        imagem = forms.ImageField(required=False, widget=forms.FileInput(attrs={'accept': 'image/*'}))

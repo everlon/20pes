@@ -2,11 +2,14 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.shortcuts import render, redirect
 import random
-from django.contrib.auth import get_user_model
+from django.contrib.auth import login, logout
+from django.contrib.auth import get_user_model, get_user
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django.views.generic import View, ListView, DetailView, TemplateView, FormView
+from django.views.generic import View, ListView, DetailView, TemplateView, FormView, DeleteView, UpdateView
 
-from .forms import ContatoForm, propertyNewForm
+from .forms import ContatoForm, propertyNewForm, propertyNewFormAuthenticated
 from .models import Imovel, Categoria
 
 
@@ -18,7 +21,7 @@ def senha_aleatoria():
 class AtivarContaView(View):
     def get(self, request, *args, **kwargs):
         user_id = kwargs.get('user_id')
-        user = get_user_model().objects.filter(id=user_id).first()
+        user = get_user_model().objects.filter(pk=user_id).first()
 
         if user and not user.is_active:
             user.is_active = True
@@ -27,7 +30,39 @@ class AtivarContaView(View):
         else:
             messages.error(request, 'Ocorreu um erro ao ativar a conta. Por favor, entre em contato.')
 
-        return redirect('home')
+        return redirect('painel')
+
+
+class CustomLoginView(LoginView):
+    template_name = 'login.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('painel')
+
+        return super().dispatch(request, *args, **kwargs)
+
+
+class PainelView(LoginRequiredMixin, ListView):
+    template_name = 'painel.html'
+    model = Imovel
+    paginate_by = 30
+    context_object_name = 'imoveis'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
+        return context
+
+    def get_queryset(self):
+        return self.model.objects.filter(submitter=self.request.user.pk).order_by('-created_at')
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            logout(request)
+            return redirect('login')
+
+        return super().dispatch(request, *args, **kwargs)
 
 
 class IndexView(ListView):
@@ -75,6 +110,10 @@ class propertyNewFormView(View):
     form_class = propertyNewForm
     success_url = reverse_lazy('property-new')
 
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('painel')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
@@ -85,7 +124,7 @@ class propertyNewFormView(View):
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST, request.FILES)
         senha=senha_aleatoria()
 
         if form.is_valid():
@@ -137,6 +176,64 @@ class propertyNewFormView(View):
         return redirect('property-new')
 
 
+class propertyNewFormViewAuthenticated(LoginRequiredMixin, View):
+    template_name = 'property-new-form.html'
+    form_class = propertyNewFormAuthenticated
+    success_url = reverse_lazy('painel')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
+        return context
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES)
+
+        if form.is_valid():
+            categoria=form.cleaned_data['categoria']
+            titulo=form.cleaned_data['titulo']
+            descricao=form.cleaned_data['descricao']
+            quartos=form.cleaned_data['quartos']
+            banheiros=form.cleaned_data['banheiros']
+            cidade=form.cleaned_data['cidade']
+            bairro=form.cleaned_data['bairro']
+            uf=form.cleaned_data['uf']
+            imagem=form.cleaned_data['imagem']
+
+            # print(get_user(self.request))
+
+            try:
+                imovel = Imovel.objects.create(
+                    submitter=get_user(self.request),
+                    categoria=categoria,
+                    titulo=titulo,
+                    descricao=descricao,
+                    quartos=quartos,
+                    banheiros=banheiros,
+                    cidade=cidade,
+                    bairro=bairro,
+                    uf=uf,
+                    imagem=imagem,
+                    active=False,
+                )
+                print(imovel)
+
+            except Exception as e:
+                messages.error(self.request, 'Erro ao enviar o cadastro, favor entrar em contato.')
+                return render(request, self.template_name, {'form': form})
+
+            messages.success(self.request, 'Cadastro enviado com sucesso.')
+
+        else:
+            messages.error(self.request, 'Erro ao enviar o cadastro, verifique os dados novamente.')
+
+        return redirect('painel')
+
+
 class propertyListView(ListView):
     template_name = 'property-grid.html'
     queryset = Imovel.objects.filter(active=True)
@@ -179,3 +276,31 @@ class propertyDetailView(DetailView):
         context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
         return context
 
+
+class propertyDeleteView(LoginRequiredMixin, DeleteView):
+    model = Imovel
+    # template_name = 'imovel_confirm_delete.html'
+    success_url = reverse_lazy('painel')
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
+
+class propertyEditView(LoginRequiredMixin, UpdateView):
+    model = Imovel
+    template_name = 'property-new-form.html'
+    form_class = propertyNewFormAuthenticated
+    login_url = '/login/'
+    redirect_field_name = 'property-edit'
+    success_url = reverse_lazy('painel')
+    success_message = "Atualizado com sucesso!"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
+        context['property_id'] = self.kwargs['pk']
+        return context
+
+    def get(self, request, *args, **kwargs):
+        # print("Valor de pk:", kwargs.get('pk'))
+        return self.post(request, *args, **kwargs)

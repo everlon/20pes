@@ -1,9 +1,11 @@
+{% load django_bootstrap5 %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 {% include 'head.html' %}
 
-  <body>
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     {% include 'search.html' %}
     {% include 'nav.html' %}
 

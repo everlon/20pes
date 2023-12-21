@@ -140,8 +140,8 @@ SECURE_SSL_REDIRECT = False
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880 # 5 MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880 # 5 MB
 
-# LOGIN_REDIRECT_URL = 'index'
-# LOGOUT_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = 'painel'
+LOGOUT_REDIRECT_URL = 'home'
 
 # Configuração de e-mail
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
