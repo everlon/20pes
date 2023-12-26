@@ -14,7 +14,8 @@ from .views import (
     propertyDeleteView,
     propertyEditView,
     aboutView,
-    contactView
+    contactView,
+    MyProfileView
 )
 
 urlpatterns = [
@@ -32,4 +33,5 @@ urlpatterns = [
     path('imoveis-new/', propertyNewFormViewAuthenticated.as_view(), name='property-new-Auth'),
     path('imoveis-del/<int:pk>/', propertyDeleteView.as_view(), name='property-del'),
     path('imoveis-edit/<int:pk>/', propertyEditView.as_view(), name='property-edit'),
+    path('meusdados/<int:pk>/', MyProfileView.as_view(), name='myprofile'),
 ]

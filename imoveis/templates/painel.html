@@ -15,6 +15,7 @@
             <div class="col-md-12 col-lg-8">
                 <div class="title-single-box">
                     <h1 class="title-single">Para Proprietários: Minha área</h1>
+                    <span>Olá {{ user.get_full_name }}!</span>
                 </div>
             </div>
             <div class="col-md-12 col-lg-4">
@@ -27,7 +28,7 @@
                         Minha Área
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <a href="{% url 'logout' %}" class="text-bg-primary p-1">Meus dados</a>
+                        <a href="{% url 'myprofile' user.pk %}" class="text-bg-primary p-1">Meus dados</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                         <a href="{% url 'logout' %}" class="text-bg-danger p-1">Sair</a>
@@ -63,7 +64,7 @@
                         {% for imovel in imoveis %}
                             <tr>
                                 <td>{% if imovel.active %}<i class="bi bi-check-lg text-primary"></i>{% else %}<i class="bi bi-dash-lg text-secondary"></i>{% endif %}</td>
-                                <td><img src="/media/{{ imovel.imagem }}" alt="NO IMG" width="100"></td>
+                                <td><img src="{{ imovel.imagem.thumb.url }}" alt="NO IMG" width="80"></td>
                                 <td>{{ imovel.titulo }}</td>
                                 <td>{{ imovel.cidade }}-{{ imovel.uf }}</td>
                                 <td><a href="{% url 'property-edit' imovel.pk %}" class="text-primary">Editar</a></td>

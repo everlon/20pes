@@ -1,7 +1,8 @@
 import uuid
 from django.db import models
 from stdimage.models import StdImageField
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth import get_user_model
 
 #  SIGNALS
 from django.db.models import signals
@@ -56,6 +57,18 @@ class Base(models.Model):
         abstract = True
 
 
+class UserProfile(AbstractUser):
+    birth_date = models.DateField('Data de nascimento', null=True, blank=True)
+    phone = models.CharField('Telefone', max_length=50, blank=True, null=True)
+    cidade = models.CharField('Cidade', max_length=150, blank=True, null=True)
+    uf = models.CharField('Estado', max_length=2, choices=UF_CHOICES, blank=True, null=True)
+
+    REQUIRED_FIELDS = ['first_name', 'email', 'phone']
+
+    def __str__(self):
+        return self.get_full_name()
+
+
 class Categoria(Base):
     titulo = models.CharField(max_length=150, db_index=True)
     parent = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
@@ -83,7 +96,7 @@ class Imagem(Base):
 
 
 class Imovel(Base):
-    submitter = models.ForeignKey(User, on_delete=models.CASCADE)
+    submitter = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     titulo = models.CharField('Título', max_length=100)
     preco = models.DecimalField('Preço', max_digits=8, decimal_places=2, blank=True, null=True)
     imagem = StdImageField('Imagem', upload_to=get_file_path, variations={'thumb': {'width': 480, 'height': 480, 'crop': True}}, blank=True)

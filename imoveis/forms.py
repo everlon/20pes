@@ -1,7 +1,7 @@
 from django import forms
 from django.core.mail.message import EmailMessage
 
-from .models import Imovel
+from .models import Imovel, User, UserProfile
 
 class ContatoForm(forms.Form):
     nome = forms.CharField(label='Nome completo', max_length=100, widget=forms.TextInput(attrs={'class': 'form-control form-control-lg form-control-a mb-4', 'required': 'required',}))
@@ -124,3 +124,10 @@ class propertyNewFormAuthenticated(forms.ModelForm):
         }
 
         imagem = forms.ImageField(required=False, widget=forms.FileInput(attrs={'accept': 'image/*'}))
+
+
+class userFormDetais(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+
+        fields = ('first_name', 'last_name', 'email', 'birth_date', 'phone', 'cidade', 'uf')

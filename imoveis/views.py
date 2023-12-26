@@ -9,8 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.views.generic import View, ListView, DetailView, TemplateView, FormView, DeleteView, UpdateView
 
-from .forms import ContatoForm, propertyNewForm, propertyNewFormAuthenticated
-from .models import Imovel, Categoria
+from .forms import ContatoForm, propertyNewForm, propertyNewFormAuthenticated, userFormDetais
+from .models import Imovel, Categoria, User, UserProfile
 
 
 def senha_aleatoria():
@@ -51,7 +51,7 @@ class PainelView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
+        context['property_cat'] = Categoria.objects.filter(active=True).order_by('parent', 'titulo')
         return context
 
     def get_queryset(self):
@@ -65,6 +65,27 @@ class PainelView(LoginRequiredMixin, ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
+class MyProfileView(LoginRequiredMixin, UpdateView):
+    template_name = 'myprofile.html'
+    model = UserProfile
+    form_class = userFormDetais
+    login_url = '/login/'
+    # redirect_field_name = 'myprofile'
+    # success_url = reverse_lazy('myprofile')
+    success_message = "Atualizado com sucesso!"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property_cat'] = Categoria.objects.filter(active=True).order_by('parent', 'titulo')
+        return context
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse_lazy('myprofile', kwargs={'pk': self.kwargs['pk']})
+
+
 class IndexView(ListView):
     template_name = 'index.html'
     queryset = Imovel.objects.filter(active=True).order_by('?')[:6]
@@ -72,7 +93,7 @@ class IndexView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
+        context['property_cat'] = Categoria.objects.filter(active=True).order_by('parent', 'titulo')
         return context
 
 
@@ -81,7 +102,7 @@ class aboutView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
+        context['property_cat'] = Categoria.objects.filter(active=True).order_by('parent', 'titulo')
         return context
 
 
@@ -92,7 +113,7 @@ class contactView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
+        context['property_cat'] = Categoria.objects.filter(active=True).order_by('parent', 'titulo')
         return context
 
     def form_valid(self, form, *args, **kwargs):
@@ -114,9 +135,11 @@ class propertyNewFormView(View):
         if self.request.user.is_authenticated:
             return redirect('painel')
 
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
+        context['property_cat'] = Categoria.objects.filter(active=True).order_by('parent', 'titulo')
         return context
 
     def get(self, request, *args, **kwargs):
@@ -140,7 +163,7 @@ class propertyNewFormView(View):
 
             User = get_user_model()
             try:
-                usuario = User.objects.create_user(
+                Usuario = User.objects.create_user(
                     username=form.cleaned_data['email'],
                     email=form.cleaned_data['email'],
                     first_name=form.cleaned_data['nome'],
@@ -152,7 +175,7 @@ class propertyNewFormView(View):
 
             try:
                 imovel = Imovel.objects.create(
-                    submitter=usuario,
+                    submitter=Usuario,
                     categoria=categoria,
                     titulo=titulo,
                     descricao=descricao,
@@ -167,7 +190,7 @@ class propertyNewFormView(View):
                 messages.error(self.request, 'Erro ao enviar o cadastro, favor entrar em contato.')
                 return render(request, self.template_name, {'form': form})
 
-            form.send_mail(senha, usuario)
+            form.send_mail(senha, Usuario)
             messages.success(self.request, 'Cadastro enviado com sucesso. Você recebeu um e-mail com sua senha temporária. Acesse sua área de cliente pelo botão LOGIN no topo do site.')
 
         else:
@@ -183,7 +206,7 @@ class propertyNewFormViewAuthenticated(LoginRequiredMixin, View):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
+        context['property_cat'] = Categoria.objects.filter(active=True).order_by('parent', 'titulo')
         return context
 
     def get(self, request, *args, **kwargs):
@@ -203,8 +226,6 @@ class propertyNewFormViewAuthenticated(LoginRequiredMixin, View):
             bairro=form.cleaned_data['bairro']
             uf=form.cleaned_data['uf']
             imagem=form.cleaned_data['imagem']
-
-            # print(get_user(self.request))
 
             try:
                 imovel = Imovel.objects.create(
@@ -243,7 +264,7 @@ class propertyListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
+        context['property_cat'] = Categoria.objects.filter(active=True).order_by('parent', 'titulo')
         return context
 
 
@@ -255,11 +276,11 @@ class propertyCatListView(ListView):
 
     def get_queryset(self):
         # categoria__slug entrará no field slug do model Categoria.
-        return Imovel.objects.filter(categoria__slug=self.kwargs['slug']).order_by('titulo')
+        return Imovel.objects.filter(active=True, categoria__slug=self.kwargs['slug']).order_by('titulo')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
+        context['property_cat'] = Categoria.objects.filter(active=True).order_by('parent', 'titulo')
         return context
 
 
@@ -273,7 +294,7 @@ class propertyDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
+        context['property_cat'] = Categoria.objects.filter(active=True).order_by('parent', 'titulo')
         return context
 
 
@@ -297,7 +318,7 @@ class propertyEditView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['property_cat'] = Categoria.objects.order_by('parent', 'titulo')
+        context['property_cat'] = Categoria.objects.filter(active=True).order_by('parent', 'titulo')
         context['property_id'] = self.kwargs['pk']
         return context
 
