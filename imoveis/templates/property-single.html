@@ -13,7 +13,7 @@
           <div class="col-md-12 col-lg-8">
             <div class="title-single-box">
               <h1 class="title-single">{{ property.titulo }}</h1>
-              <span class="color-text-a">{{ property.cidade }}-{{ property.uf }}</span>
+              <span class="color-text-a">{{ property.cidade|default:"" }}-{{ property.uf|default:"" }}</span>
             </div>
           </div>
           <div class="col-md-12 col-lg-4">
@@ -81,7 +81,7 @@
                       </li>
                       <li class="d-flex justify-content-between">
                         <strong>Localização:</strong>
-                        <span>{{ property.endereco }}</span>
+                        <span>{{ property.cidade|default:"" }}{{ property.uf|default:"" }}</span>
                       </li>
                       <li class="d-flex justify-content-between">
                         <strong>Mobiliado:</strong>

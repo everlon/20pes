@@ -67,7 +67,7 @@
                         <div class="card-header-a">
                             <h2 class="card-title-a">
                             <a href="{% url 'property-single' slug=i.slug %}">{{ i.titulo }}
-                                <br />{{ i.cidade }}-{{ i.uf}}</a>
+                                <br />{{ i.cidade|default:"" }}-{{ i.uf|default:"" }}</a>
                             </h2>
                         </div>
                         <div class="card-body-a">
