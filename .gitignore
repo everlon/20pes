@@ -9,4 +9,4 @@ tmp/
 TODO.txt
 core/settings.py
 venv/
-media/
+#media/

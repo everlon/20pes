@@ -66,7 +66,7 @@
                                 <td>{% if imovel.active %}<i class="bi bi-check-lg text-primary"></i>{% else %}<i class="bi bi-dash-lg text-secondary"></i>{% endif %}</td>
                                 <td><img src="{{ imovel.imagem.thumb.url }}" alt="NO IMG" width="80"></td>
                                 <td>{{ imovel.titulo }}</td>
-                                <td>{{ imovel.cidade|default:"" }}-{{ imovel.uf|default:"" }}</td>
+                                <td>{{ imovel.cidade|default_if_none:"" }}-{{ imovel.uf|default_if_none:"" }}</td>
                                 <td><a href="{% url 'property-edit' imovel.pk %}" class="text-primary">Editar</a></td>
                                 {% comment %}<td><a class="text-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete{{ imovel.pk }}">Apagar</a></td>{% endcomment %}
                                 <td><a class="text-danger" hx-post="{% url 'property-del' imovel.pk %}" style="cursor: pointer;">Apagar</a></td>
