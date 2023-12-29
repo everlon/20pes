@@ -60,14 +60,16 @@
                 <div class="col-md-4">
                     <div class="card-box-a card-shadow">
                     <div class="img-box-a">
-                        <img src="/media/{{ i.imagem }}" alt="" class="img-a img-fluid">
+                        <img src="/media/{{ i.imagem }}" alt="" class="img-a img-fluid" style="height: 400px;">
                     </div>
                     <div class="card-overlay">
                         <div class="card-overlay-a-content">
                         <div class="card-header-a">
                             <h2 class="card-title-a">
                             <a href="{% url 'property-single' slug=i.slug %}">{{ i.titulo }}
-                                <br />{{ i.cidade|default:"" }}-{{ i.uf|default:"" }}</a>
+                                {% if i.cidade %}
+                                  <br />{{ i.cidade|default:"" }}-{{ i.uf|default:"" }}</a>
+                                {% endif %}
                             </h2>
                         </div>
                         <div class="card-body-a">
@@ -77,23 +79,23 @@
                         </div>
                         <div class="card-footer-a">
                             <ul class="card-info d-flex justify-content-around">
-                            <li>
+                              {% if i.area %}<li>
                                 <h4 class="card-info-title">Area</h4>
                                 <span>{{ i.area }}m
                                 <sup>2</sup>
                                 </span>
-                            </li>
+                            </li>{% endif %}
                             <li>
                                 <h4 class="card-info-title">Quartos</h4>
-                                <span>{{ i.quartos }}</span>
+                                <span>{{ i.quartos|default:"-" }}</span>
                             </li>
                             <li>
                                 <h4 class="card-info-title">Banheiros</h4>
-                                <span>{{ i.banheiros }}</span>
+                                <span>{{ i.banheiros|default:"-" }}</span>
                             </li>
                             <li>
                                 <h4 class="card-info-title">Garagens</h4>
-                                <span>{{ i.vagas_garagem }}</span>
+                                <span>{{ i.vagas_garagem|default:"Não" }}</span>
                             </li>
                             </ul>
                         </div>

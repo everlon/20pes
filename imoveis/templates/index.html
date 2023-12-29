@@ -187,14 +187,16 @@
             <div class="carousel-item-b swiper-slide">
               <div class="card-box-a card-shadow">
                 <div class="img-box-a">
-                  <img src="/media/{{ i.imagem }}" alt="" class="img-a img-fluid">
+                  <img src="/media/{{ i.imagem }}" alt="" class="img-a img-fluid" style="height: 400px;">
                 </div>
                 <div class="card-overlay">
                   <div class="card-overlay-a-content">
                     <div class="card-header-a">
                       <h2 class="card-title-a">
                         <a href="{% url 'property-single' slug=i.slug %}">{{ i.titulo }}
-                          <br />{{ i.cidade }}-{{ i.uf}}</a>
+                          {% if i.cidade %}
+                            <br />{{ i.cidade|default:"" }}-{{ i.uf|default:"" }}</a>
+                        {% endif %}
                       </h2>
                     </div>
                     <div class="card-body-a">

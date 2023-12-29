@@ -41,17 +41,17 @@
         <div class="row justify-content-center">
           <div class="col-lg-8">
             <div id="property-single-carousel" class="swiper">
-              <div class="swiper-wrapper">
+              <div class="swiper-wrapper text-center">
                 {% if property.galeria_imagens.all %}
                   {% for i in property.galeria_imagens.all %}
                     <div class="carousel-item-b swiper-slide">
-                      <img src="{{ i.imagem.thumb.url }}" alt="">
+                      <img src="{{ i.imagem.thumb.url }}" alt="" style="height: 640px;">
                       <br /><small>{{ i.titulo }}</small>
                     </div>
                   {% endfor %}
                 {% else %}
                   <div class="carousel-item-b swiper-slide">
-                    <img src="{{ property.imagem.thumb.url }}" alt="">
+                    <img src="{{ property.imagem.thumb.url }}" alt="" style="height: 640px;">
                   </div>
                 {% endif %}
               </div>
@@ -81,33 +81,35 @@
                       </li>
                       <li class="d-flex justify-content-between">
                         <strong>Localização:</strong>
-                        <span>{{ property.cidade|default:"" }}{{ property.uf|default:"" }}</span>
+                        <span>{{ property.cidade|default:"" }}{{ property.uf|default:"-" }}</span>
                       </li>
                       <li class="d-flex justify-content-between">
                         <strong>Mobiliado:</strong>
                         <span>{{ property.mobiliado|yesno:"Sim,Não" }}</span>
                       </li>
+                      {% if property.area %}
                       <li class="d-flex justify-content-between">
                         <strong>Area:</strong>
-                        <span>{{ property.area }}m
+                        <span>{{ property.area|default:"-" }}m
                           <sup>2</sup>
                         </span>
                       </li>
+                      {% endif %}
                       <li class="d-flex justify-content-between">
                         <strong>Quartos:</strong>
-                        <span>{{ property.quartos }}</span>
+                        <span>{{ property.quartos|default:"-" }}</span>
                       </li>
                       <li class="d-flex justify-content-between">
                         <strong>Banheiros:</strong>
-                        <span>{{ property.banheiros }}</span>
+                        <span>{{ property.banheiros|default:"-" }}</span>
                       </li>
                       <li class="d-flex justify-content-between">
                         <strong>Elevador:</strong>
-                        <span>{{ property.elevador }}</span>
+                        <span>{{ property.elevador|default:"Não" }}</span>
                       </li>
                       <li class="d-flex justify-content-between">
                         <strong>Garagens:</strong>
-                        <span>{{ property.vagas_garagem }}</span>
+                        <span>{{ property.vagas_garagem|default:"Não" }}</span>
                       </li>
                     </ul>
                   </div>
