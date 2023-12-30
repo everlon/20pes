@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load tag_utils %}
 
 {% block content %}
 
@@ -85,7 +86,7 @@
                       </li>
                       <li class="d-flex justify-content-between">
                         <strong>Localização:</strong>
-                        <span>{{ property.cidade|default:"" }}{{ property.uf|default:"-" }}</span>
+                        <span>{{ property.cidade|default:"" }}-{{ property.uf|default:"" }}</span>
                       </li>
                       <li class="d-flex justify-content-between">
                         <strong>Mobiliado:</strong>
@@ -100,21 +101,55 @@
                       </li>
                       {% endif %}
                       <li class="d-flex justify-content-between">
-                        <strong>Quartos:</strong>
+                        <strong>{{ property|verbose_name:"quartos" }}:</strong>
                         <span>{{ property.quartos|default:"-" }}</span>
                       </li>
                       <li class="d-flex justify-content-between">
-                        <strong>Banheiros:</strong>
+                        <strong>{{ property|verbose_name:"banheiros" }}:</strong>
                         <span>{{ property.banheiros|default:"-" }}</span>
                       </li>
                       <li class="d-flex justify-content-between">
-                        <strong>Elevador:</strong>
-                        <span>{{ property.elevador|default:"Não" }}</span>
+                        <strong>{{ property|verbose_name:"suites" }}:</strong>
+                        <span>{{ property.suites|default:"-" }}</span>
                       </li>
                       <li class="d-flex justify-content-between">
-                        <strong>Garagens:</strong>
-                        <span>{{ property.vagas_garagem|default:"Não" }}</span>
+                        <strong>{{ property|verbose_name:"elevador" }}:</strong>
+                        <span>{{ property.elevador|yesno:"Sim,Não" }}</span>
                       </li>
+                      <li class="d-flex justify-content-between">
+                        <strong>{{ property|verbose_name:"vagas_garagem" }}:</strong>
+                        <span>{{ property.vagas_garagem|default:"-" }}</span>
+                      </li>
+
+                      <li class="d-flex justify-content-between">
+                        <strong>{{ property|verbose_name:"funcionarios" }}:</strong>
+                        <span>{{ property.funcionarios|yesno:"Sim,Não" }}</span>
+                      </li>
+                      <li class="d-flex justify-content-between">
+                        <strong>{{ property|verbose_name:"churrasqueira" }}:</strong>
+                        <span>{{ property.churrasqueira|yesno:"Sim,Não" }}</span>
+                      </li>
+                      <li class="d-flex justify-content-between">
+                        <strong>{{ property|verbose_name:"piscina" }}:</strong>
+                        <span>{{ property.piscina|yesno:"Sim,Não" }}</span>
+                      </li>
+                      <li class="d-flex justify-content-between">
+                        <strong>{{ property|verbose_name:"lavanderia" }}:</strong>
+                        <span>{{ property.lavanderia|yesno:"Sim,Não" }}</span>
+                      </li>
+                      <li class="d-flex justify-content-between">
+                        <strong>{{ property|verbose_name:"portaria24" }}:</strong>
+                        <span>{{ property.portaria24|yesno:"Sim,Não" }}</span>
+                      </li>
+                      <li class="d-flex justify-content-between">
+                        <strong>{{ property|verbose_name:"zelador" }}:</strong>
+                        <span>{{ property.zelador|yesno:"Sim,Não" }}</span>
+                      </li>
+                      <li class="d-flex justify-content-between">
+                        <strong>{{ property|verbose_name:"pet" }}:</strong>
+                        <span>{{ property.pet|yesno:"Sim,Não" }}</span>
+                      </li>
+
                     </ul>
                   </div>
                 </div>
@@ -124,7 +159,7 @@
                   <div class="title-box-d section-t3">
                     <h3 class="title-d">Descrição</h3>
                   </div>
-                  <p class="description color-text-a">{{ property.descricao }}</p>
+                  <p class="description color-text-a">{{ property.descricao|default:"Não foi informado mais detalhes. Entre em contato em caso de dúvidas." }}</p>
                 </div>
               </div>
             </div>

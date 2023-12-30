@@ -123,7 +123,7 @@ class Imovel(Base):
     lavanderia = models.BooleanField('Lavanderia', default=False)
     portaria24 = models.BooleanField('Portaria 24 hrs', default=False)
     zelador = models.BooleanField('Zelador', default=False)
-    pet = models.BooleanField('Pode pet?', default=False)
+    pet = models.BooleanField(default=False, verbose_name='Permite animais de estimação?', choices=[(False, 'Não'), (True, 'Sim')])
 
     class Meta:
         verbose_name = 'Imóvel'
