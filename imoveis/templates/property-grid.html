@@ -67,12 +67,12 @@
                     <div class="card-overlay">
                         <div class="card-overlay-a-content">
                         <div class="card-header-a">
-                            <h2 class="card-title-a">
+                            <h3 class="card-title-a">
                             <a href="{% url 'property-single' slug=i.slug %}">{{ i.titulo }}
                                 {% if i.cidade %}
                                   <br />{{ i.cidade|default:"" }}-{{ i.uf|default:"" }}</a>
                                 {% endif %}
-                            </h2>
+                            </h3>
                         </div>
                         <div class="card-body-a">
                             <a href="{% url 'property-single' slug=i.slug %}" class="link-a">Saiba mais

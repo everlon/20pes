@@ -13,6 +13,7 @@ from .views import (
     propertyNewFormViewAuthenticated,
     propertyDeleteView,
     propertyEditView,
+    propertyDevelopment,
     aboutView,
     contactView,
     MyProfileView
@@ -22,6 +23,7 @@ urlpatterns = [
     path('', IndexView.as_view(), name='home'),
     path('sobre/', aboutView.as_view(), name='about'),
     path('contatos/', contactView.as_view(), name='contactus'),
+    path('desenvolvimento-imobiliario/', propertyDevelopment.as_view(), name='propertydevelopment'),
     path('imoveis-cadastro/', propertyNewFormView.as_view(), name='property-new'),
     path('imoveis/', propertyListView.as_view(), name='property-grid'),
     path('imoveis/<slug:slug>', propertyCatListView.as_view(), name='property-categ'),

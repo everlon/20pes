@@ -648,7 +648,7 @@ a:hover {
 
 .navbar-default.navbar-trans .nav-link,
 .navbar-default.navbar-reduce .nav-link {
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   color: #000000;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -1316,13 +1316,13 @@ a:hover {
 
 @media (min-width: 768px) {
   .card-header-a .card-title-a {
-    font-size: 1.3rem;
+    font-size: 1.0rem;
   }
 }
 
 @media (min-width: 992px) {
   .card-header-a .card-title-a {
-    font-size: 2rem;
+    font-size: 1.7rem;
   }
 }
 

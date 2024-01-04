@@ -126,6 +126,26 @@ class contactView(FormView):
         return super(contactView, self).form_invalid(form, *args, **kwargs)
 
 
+class propertyDevelopment(FormView):
+    template_name = 'property-development.html'
+    form_class = ContatoForm
+    success_url = reverse_lazy('propertydevelopment')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property_cat'] = Categoria.objects.filter(active=True).order_by('parent', 'titulo')
+        return context
+
+    def form_valid(self, form, *args, **kwargs):
+        form.send_mail()
+        messages.success(self.request, 'E-mail enviado com sucesso')
+        return super(contactView, self).form_valid(form, *args, **kwargs)
+
+    def form_invalid(self, form, *args, **kwargs):
+        messages.error(self.request, 'Erro ao enviar e-mail, favor entrar em contato')
+        return super(contactView, self).form_invalid(form, *args, **kwargs)
+
+
 class propertyNewFormView(View):
     template_name = 'property-new-form.html'
     form_class = propertyNewForm

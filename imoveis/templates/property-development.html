@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<main id="main">
+
+    <!-- ======= Intro Single ======= -->
+    <section class="intro-single">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-lg-8">
+            <div class="title-single-box">
+              <h1 class="title-single">Desenvolvimento imobiliário</h1>
+              <span class="color-text-a">Estamos sempre prontos para atendê-lo e esclarecer todas as suas dúvidas. Seja para discutir um projeto, obter mais informações sobre nossos serviços ou iniciar uma parceria, estamos à disposição.</span>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-4">
+            <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Desenvolvimento
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section><!-- End Intro Single-->
+
+    <!-- ======= Contact Single ======= -->
+    <section class="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-md-7">
+
+                <form action="{% url 'contactus' %}" method="post" class="php-email-form" autocomplete="off">
+                    {% bootstrap_messages %}
+                    {% csrf_token %}
+                    {% bootstrap_form form layout='inline' %}
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn btn-a">Enviar</button>
+                      </div>
+                </form>
+
+              </div>
+              <div class="col-md-5 section-md-t3">
+                <div class="icon-box-content mb-4">Não hesite em nos contatar para descobrir como a 20 Pés pode tornar seus sonhos imobiliários realidade. Estamos ansiosos para ouvir de você e iniciar uma jornada rumo a experiências de vida excepcionais e investimentos sólidos.</div>
+                <div class="icon-box section-b2">
+                  <div class="icon-box-icon">
+                    <span class="bi bi-envelope"></span>
+                  </div>
+                  <div class="icon-box-content table-cell">
+                    <div class="icon-box-title">
+                      <h4 class="icon-title">Diga Olá!</h4>
+                    </div>
+                    <div class="icon-box-content">
+                      <p class="mb-1">E-mail.
+                        <span class="color-a">contact@example.com</span>
+                      </p>
+                      <p class="mb-1">Telefone.
+                        <span class="color-a">+54 356 945234</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="icon-box section-b2">
+                  <div class="icon-box-icon">
+                    <span class="bi bi-geo-alt"></span>
+                  </div>
+                  <div class="icon-box-content table-cell">
+                    <div class="icon-box-title">
+                      <h4 class="icon-title">Endereço</h4>
+                    </div>
+                    <div class="icon-box-content">
+                      <p class="mb-1">
+                        Manhattan, Nueva York 10036,
+                        <br> São Paulo - SP
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="icon-box">
+                  <div class="icon-box-icon">
+                    <span class="bi bi-share"></span>
+                  </div>
+                  <div class="icon-box-content table-cell">
+                    <div class="icon-box-title">
+                      <h4 class="icon-title">Redes Sociais</h4>
+                    </div>
+                    <div class="icon-box-content">
+                      <div class="socials-footer">
+                        <ul class="list-inline">
+                          <li class="list-inline-item">
+                            <a href="#" class="link-one">
+                              <i class="bi bi-facebook" aria-hidden="true"></i>
+                            </a>
+                          </li>
+                          <li class="list-inline-item">
+                            <a href="#" class="link-one">
+                              <i class="bi bi-twitter" aria-hidden="true"></i>
+                            </a>
+                          </li>
+                          <li class="list-inline-item">
+                            <a href="#" class="link-one">
+                              <i class="bi bi-instagram" aria-hidden="true"></i>
+                            </a>
+                          </li>
+                          <li class="list-inline-item">
+                            <a href="#" class="link-one">
+                              <i class="bi bi-linkedin" aria-hidden="true"></i>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- End Contact Single-->
+
+  </main><!-- End #main -->
+
+{% endblock %}
