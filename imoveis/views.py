@@ -106,6 +106,15 @@ class aboutView(TemplateView):
         return context
 
 
+class legalInformationView(TemplateView):
+    template_name = 'legal_information.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property_cat'] = Categoria.objects.filter(active=True).order_by('parent', 'titulo')
+        return context
+
+
 class contactView(FormView):
     template_name = 'contactus.html'
     form_class = ContatoForm

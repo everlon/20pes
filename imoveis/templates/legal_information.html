@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<main id="main">
+
+    <!-- ======= Intro Single ======= -->
+    <section class="intro-single">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-lg-9">
+            <div class="title-single-box">
+              <h1 class="title-single">Informações Legais</h1>
+              <span class="color-text-a">
+                <p><strong>Informações Legais</strong></p>
+
+                <p>Bem-vindo às informações legais da 20 Pés. Ao acessar ou utilizar nossos serviços, é fundamental que você esteja ciente e concorde com os Termos de Usuário e a Política de Privacidade a seguir.</p>
+
+                <p><strong>Termos de Usuário:</strong></p>
+
+                <p>1. <b>Aceitação dos Termos de Usuário:</b> Ao utilizar os serviços da 20 Pés, você concorda em cumprir integralmente estes Termos de Usuário e todas as leis e regulamentos aplicáveis. Se houver discordância com qualquer parte destes termos, recomendamos que não acesse o serviço.</p>
+                <p>2. <b>Conta do Usuário:</b> Para acessar recursos específicos, a criação de uma conta pode ser necessária. A responsabilidade pela confidencialidade das suas credenciais de conta é sua, e qualquer atividade não autorizada deve ser informada imediatamente.</p>
+                <p>3. <b>Uso Aceitável:</b> Comprometa-se a utilizar os serviços apenas para fins legais e de acordo com estes termos, evitando qualquer ação que possa prejudicar a integridade do nosso sistema.</p>
+                <p>4. <b>Propriedade Intelectual:</b> Todo o conteúdo presente nos serviços da 20 Pés é propriedade exclusiva. A reprodução, distribuição, modificação ou criação de trabalhos derivados sem autorização é estritamente proibida.</p>
+
+                <p><strong>Política de Privacidade:</strong></p>
+
+                <p>1. <b>Informações Coletadas:</b> Coletamos informações pessoais fornecidas por você ao criar uma conta ou utilizar nossos serviços, incluindo nome, endereço de e-mail, informações de pagamento e dados de uso.</p>
+                <p>2. <b>Uso das Informações:</b> Suas informações são utilizadas para aprimorar nossos serviços, personalizar sua experiência, processar transações e enviar comunicações relevantes. Não compartilhamos suas informações pessoais, exceto quando necessário para fornecer os serviços solicitados.</p>
+                <p>3. <b>Segurança:</b> Empregamos medidas de segurança para proteger suas informações, embora não possamos garantir a segurança absoluta da transmissão ou armazenamento eletrônico de dados.</p>
+                <p>4. <b>Cookies e Tecnologias Semelhantes:</b> Ao concordar com estes termos, você aceita o uso de cookies e tecnologias similares para melhorar sua experiência de usuário.</p>
+                <p>5. <b>Alterações na Política de Privacidade:</b> Reservamo-nos o direito de atualizar periodicamente nossa Política de Privacidade. Recomendamos revisar esta política regularmente.</p>
+
+                <p>Ao continuar a utilizar os serviços da 20 Pés, você está implicitamente concordando com estes Termos de Usuário e a Política de Privacidade. Em caso de dúvidas ou preocupações, entre em contato conosco pelo atendimento@20pes.com.br .</p>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-3">
+            <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Informações Legais
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section><!-- End Intro Single-->
+
+  </main><!-- End #main -->
+
+{% endblock %}
