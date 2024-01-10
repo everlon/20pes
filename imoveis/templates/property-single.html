@@ -92,6 +92,7 @@
                         <strong>Mobiliado:</strong>
                         <span>{{ property.mobiliado|yesno:"Sim,Não" }}</span>
                       </li>
+                      {% comment %}
                       {% if property.area %}
                       <li class="d-flex justify-content-between">
                         <strong>Area:</strong>
@@ -100,6 +101,7 @@
                         </span>
                       </li>
                       {% endif %}
+                      {% endcomment %}
                       <li class="d-flex justify-content-between">
                         <strong>{{ property|verbose_name:"quartos" }}:</strong>
                         <span>{{ property.quartos|default:"-" }}</span>

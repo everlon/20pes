@@ -9,7 +9,6 @@
 
     <div class="swiper-wrapper">
 
-      {% comment %}
       <div class="swiper-slide carousel-item-a intro-item bg-image" style="background-image: url({% static 'assets/img/slide-4.jpg' %})">
         <div class="overlay overlay-a"></div>
         <div class="intro-content display-table">
@@ -50,8 +49,9 @@
             </div>
           </div>
         </div>
-      </div> {% endcomment %}
+      </div>
 
+      {% comment %}
       <div class="swiper-slide carousel-item-a intro-item bg-image" style="background-image: url({% static 'assets/img/slide-6.jpg' %})">
         <div class="overlay overlay-a"></div>
         <div class="intro-content display-table">
@@ -91,7 +91,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> {% endcomment %}
     </div>
     <div class="swiper-pagination"></div>
   </div><!-- End Intro Section -->
@@ -224,6 +224,7 @@
                         <span class="bi bi-chevron-right"></span>
                       </a>
                     </div>
+                    {% comment %}
                     <div class="card-footer-a">
                       <ul class="card-info d-flex justify-content-around">
                         {% if i.area %}
@@ -248,6 +249,7 @@
                         </li>
                       </ul>
                     </div>
+                    {% endcomment %}
                   </div>
                 </div>
               </div>
