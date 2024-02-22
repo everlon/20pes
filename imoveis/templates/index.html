@@ -98,6 +98,37 @@
 
   <main id="main">
 
+    <section class="section-services section-t8">
+      <div class="container">
+        <div class="col-md-12 position-relative">
+        <div class="row">
+          <div class="col-md-4">
+            <img src="{% static 'assets/img/about-1.jpg' %}" alt="" class="img-fluid">
+          </div>
+          <div class="col-md-8">
+            <div class="title-box-d">
+              <h2 class="title-a">Um pouco
+                <span class="color-d">sobre</span> nossa história.
+              </h2>
+            </div>
+            <p class="color-text-a">
+              Nós somos a 20 Pés, uma empresa que constrói sonhos e entrega resultados.
+            </p>
+            <p class="color-text-a">
+              Com mais de 15 anos de atuação no litoral Norte de São Paulo, nós desenvolvemos condomínios, transformando ativos em excelentes oportunidades de negócios.
+            </p>
+            <p class="color-text-a">
+              Nossa experiência vai além do básico, buscando sempre adequar cada realidade a ótimas oportunidades. Conheça os nossos serviços e tenha conosco um parceiro que vai rentabilizar a sua tranquilidade.
+            </p>
+            <p class="color-text-a">
+              Não seria nada mal ter uma casa nas badaladas praias do litoral norte de São Paulo e, assim, contar com alguém que cuidará de tudo para que, no final do mês, além de momentos especiais, você tenha um ativo que, bem trabalhado por nossas ferramentas de aluguéis e gestão, proporcionará não apenas alegrias, mas também bons lucros!
+            </p>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+
     <!-- ======= Services Section ======= -->
     <section class="section-services section-t8">
       <div class="container">
@@ -111,36 +142,14 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div class="card-box-c foo">
               <div class="card-header-c d-flex">
-                <div class="card-box-ico">
+                <!-- <div class="card-box-ico">
                   <span class="bi bi-cart"></span>
-                </div>
+                </div> -->
                 <div class="card-title-c align-self-center">
-                  <h2 class="title-c">Gestão</h2>
-                </div>
-              </div>
-              <div class="card-body-c">
-                <p class="content-c">
-                  A 20 Pés destaca-se por oferecer serviços que transcendem a simples construção, incorporando um estilo único em cada empreendimento, proporcionando não apenas moradias, mas verdadeiras experiências de vida.
-                </p>
-              </div>
-              <div class="card-footer-c">
-                <a href="{% url 'about' %}" class="link-c link-icon">Saiba mais
-                  <span class="bi bi-chevron-right"></span>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card-box-c foo">
-              <div class="card-header-c d-flex">
-                <div class="card-box-ico">
-                  <span class="bi bi-calendar4-week"></span>
-                </div>
-                <div class="card-title-c align-self-center">
-                  <h2 class="title-c">Investimentos</h2>
+                  <h2 class="title-d text-muted">Desenvolvimento imobiliário</h2>
                 </div>
               </div>
               <div class="card-body-c">
@@ -149,30 +158,30 @@
                 </p>
               </div>
               <div class="card-footer-c">
-                <a href="{% url 'about' %}" class="link-c link-icon">Saiba mais
-                  <span class="bi bi-calendar4-week"></span>
+                <a href="{% url 'propertydevelopment' %}" class="link-c link-icon">Saiba mais
+                  <span class="bi bi-chevron-right"></span>
                 </a>
               </div>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div class="card-box-c foo">
               <div class="card-header-c d-flex">
-                <div class="card-box-ico">
-                  <span class="bi bi-card-checklist"></span>
-                </div>
+                <!-- <div class="card-box-ico">
+                  <span class="bi bi-calendar4-week"></span>
+                </div> -->
                 <div class="card-title-c align-self-center">
-                  <h2 class="title-c">Locação</h2>
+                  <h2 class="title-d text-muted">Gestão e Locação</h2>
                 </div>
               </div>
               <div class="card-body-c">
-                <p class="content-c">
-                  Além de construir sonhos, a 20 Pés também se destaca na gestão e locação de propriedades, oferecendo aos proprietários a tranquilidade de terem seus ativos geridos por ferramentas eficazes, resultando não apenas em momentos especiais, mas também em bons lucros mensais.
-                </p>
+                <!-- <p class="content-c">Na 20 Pés, nossa expertise vai além da simples construção. Destacamo-nos por oferecer serviços que transcendem, incorporando um estilo único em cada empreendimento, transformando não apenas propriedades, mas também proporcionando experiências de vida verdadeiramente memoráveis.</p> -->
+                <p class="content-c">Além de concretizar sonhos através da construção inovadora, a 20 Pés se destaca na gestão e locação de propriedades. Oferecemos aos proprietários a tranquilidade de terem seus ativos geridos por ferramentas eficazes. Não se trata apenas de criar momentos especiais, mas também de garantir bons lucros mensais.</p>
+                <!-- <p class="content-c">Ao escolher a 20 Pés, você investe não apenas em um lar, mas em uma abordagem completa que une construção de qualidade a uma gestão eficiente. Proporcionamos não apenas um lugar para morar, mas um investimento que se traduz em experiências únicas e retornos financeiros consistentes. Conheça nossos empreendimentos e descubra como a 20 Pés pode transformar seus sonhos em realidade e rentabilidade.</p> -->
               </div>
               <div class="card-footer-c">
-                <a href="{% url 'about' %}" class="link-c link-icon">Saiba mais
-                  <span class="bi bi-chevron-right"></span>
+                <a href="{% url 'property-grid' %}" class="link-c link-icon">Saiba mais
+                  <span class="bi bi-calendar4-week"></span>
                 </a>
               </div>
             </div>

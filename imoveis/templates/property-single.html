@@ -23,10 +23,10 @@
             <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                  <a href="index.html">Home</a>
+                  <a href="{% url 'home' %}">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                  <a href="property-grid.html">Imóveis</a>
+                  <a href="{% url 'property-grid' %}">Imóveis</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
                     {{ property.titulo }}

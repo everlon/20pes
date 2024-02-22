@@ -7,7 +7,8 @@
         <div class="col-sm-12 col-md-4">
           <div class="widget-a">
             <div class="w-header-a">
-              <h3 class="w-title-a text-brand">20 Pés</h3>
+              <!-- <h3 class="w-title-a text-brand">20 Pés</h3> -->
+              <img src="{% static 'assets/img/logo_footer.png' %}" width="150" alt="20 Pés" class="img-a img-fluid">
             </div>
             <div class="w-body-a">
               <p class="w-text-a color-text-a">
@@ -20,7 +21,7 @@
                   <span class="color-text-a">Phone .</span> +55 11 95356 9452
                 </li>
                 <li class="color-a">
-                  <span class="color-text-a">Email .</span> contato@20pes.com.br
+                  <span class="color-text-a">Email .</span> atendimento@20pes.com.br
                 </li>
               </ul>
             </div>
@@ -56,13 +57,13 @@
             <div class="w-body-a">
               <ul class="list-unstyled">
                 <li class="item-list-a">
-                  <i class="bi bi-chevron-right"></i> <a href="{% url 'property-new' %}">Deixe seu apartamento</a>
+                  <i class="bi bi-chevron-right"></i> <a href="{% url 'property-new' %}">Deixe seu imóvel conosco</a>
                 </li>
                 <li class="item-list-a">
-                  <i class="bi bi-chevron-right"></i> <a href="{% url 'contactus' %}">Compre um apartamento</a>
+                  <i class="bi bi-chevron-right"></i> <a href="{% url 'contactus' %}">Compre um imóvel conosco</a>
                 </li>
               </ul>
-              <h5>marketing@20pes.com.br</h5>
+              <h5>atendimento@20pes.com.br</h5>
             </div>
           </div>
         </div>
@@ -73,6 +74,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
+          {% comment %}
           <div class="socials-a">
             <ul class="list-inline">
               <li class="list-inline-item">
@@ -97,9 +99,10 @@
               </li>
             </ul>
           </div>
+          {% endcomment %}
           <div class="copyright-footer">
             <p class="copyright color-text-a">
-              &copy; 2023
+              &copy; 2023 - 
               <span class="color-a">20 Pés</span> Todos os direitos reservados.
             </p>
           </div>
