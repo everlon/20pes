@@ -22,7 +22,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link {% menu_active request 'sobre' %}" href="{% url 'home' %}#main">Sobre</a>
+            <a class="nav-link {% menu_active request 'sobre' %}" href="{% url 'about' %}">Sobre</a>
           </li>
 
           <li class="nav-item">
@@ -31,6 +31,10 @@
 
           <li class="nav-item">
             <a class="nav-link {% menu_active request 'comunicacao' %}" href="{% url 'propertydevelopment' %}">Desenvolvimento imobiliário</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% menu_active request 'lancamentos' %}" href="{% url 'lancamentos' %}">Lançamentos</a>
           </li>
 
           {% comment %}

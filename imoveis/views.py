@@ -354,3 +354,7 @@ class propertyEditView(LoginRequiredMixin, UpdateView):
     def get(self, request, *args, **kwargs):
         # print("Valor de pk:", kwargs.get('pk'))
         return self.post(request, *args, **kwargs)
+
+
+def lancamentos(request):
+    return render(request, 'lancamentos.html')

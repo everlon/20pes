@@ -1,6 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views
 
+
 from .views import (
     AtivarContaView,
     CustomLoginView,
@@ -17,7 +18,8 @@ from .views import (
     aboutView,
     legalInformationView,
     contactView,
-    MyProfileView
+    MyProfileView,
+    lancamentos
 )
 
 urlpatterns = [
@@ -27,8 +29,9 @@ urlpatterns = [
     path('contatos/', contactView.as_view(), name='contactus'),
     path('desenvolvimento-imobiliario/', propertyDevelopment.as_view(), name='propertydevelopment'),
     path('imoveis-cadastro/', propertyNewFormView.as_view(), name='property-new'),
-    path('imoveis/', propertyListView.as_view(), name='property-grid'), 
+    path('imoveis/', propertyListView.as_view(), name='property-grid'),
     path('imoveis/<slug:slug>', propertyCatListView.as_view(), name='property-categ'),
+    path('lancamentos/', lancamentos, name='lancamentos'),
     path('p/<slug:slug>/', propertyDetailView.as_view(), name='property-single'),
     path('ativar-conta/<int:user_id>/', AtivarContaView.as_view(), name='ativar_conta'),
     path('login/', CustomLoginView.as_view(), name='login'),
