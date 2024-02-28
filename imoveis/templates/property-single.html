@@ -101,7 +101,7 @@
                         </span>
                       </li>
                       {% endif %}
-                      {% endcomment %}
+                      
                       <li class="d-flex justify-content-between">
                         <strong>{{ property|verbose_name:"quartos" }}:</strong>
                         <span>{{ property.quartos|default:"-" }}</span>
@@ -151,6 +151,8 @@
                         <strong>{{ property|verbose_name:"pet" }}:</strong>
                         <span>{{ property.pet|yesno:"Sim,Não" }}</span>
                       </li>
+
+                      {% endcomment %}
 
                     </ul>
                   </div>
