@@ -1,7 +1,7 @@
+import random
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.shortcuts import render, redirect
-import random
 from django.contrib.auth import login, logout
 from django.contrib.auth import get_user_model, get_user
 from django.contrib.auth.views import LoginView
@@ -15,7 +15,6 @@ from .models import Imovel, Categoria, User, UserProfile
 
 def senha_aleatoria():
     return ''.join([str(random.randint(0, 9)) for _ in range(6)])
-
 
 
 class AtivarContaView(View):

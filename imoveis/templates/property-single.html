@@ -41,6 +41,7 @@
     <!-- ======= Property Single ======= -->
     <section class="property-single nav-arrow-b">
       <div class="container">
+
         <div class="row justify-content-center">
           <div class="col-lg-8">
             <div id="property-single-carousel" class="swiper">
@@ -48,14 +49,13 @@
                 {% if property.galeria_imagens.all %}
                   {% for i in property.galeria_imagens.all %}
                     <div class="carousel-item-b swiper-slide">
-                      <img src="{{ i.imagem.url }}" alt="" style="height: 640px;">
-                      {% comment %}<img src="{{ i.imagem.thumb.url }}" alt="" style="height: 640px;">{% endcomment %}
+                      <img src="{{ i.imagem.thumb.url }}" alt="" style="height: 420px;">
                       <br /><small>{{ i.descricao }}</small>
                     </div>
                   {% endfor %}
                 {% else %}
                   <div class="carousel-item-b swiper-slide">
-                    <img src="{{ property.imagem.url }}" alt="" style="height: 640px;">
+                    <img src="{{ property.imagem.url }}" alt="" style="height: 420px;">
                     <br /><small>{{ property.titulo }}</small>
                   </div>
                 {% endif %}
@@ -64,7 +64,7 @@
             <div class="property-single-carousel-pagination carousel-pagination"></div>
           </div>
         </div>
-
+	
         <div class="row">
           <div class="col-sm-12">
 
@@ -92,8 +92,10 @@
                         <strong>Mobiliado:</strong>
                         <span>{{ property.mobiliado|yesno:"Sim,Não" }}</span>
                       </li>
+					  
                       {% comment %}
-                      {% if property.area %}
+                      
+					  {% if property.area %}
                       <li class="d-flex justify-content-between">
                         <strong>Area:</strong>
                         <span>{{ property.area|default:"-" }}m
